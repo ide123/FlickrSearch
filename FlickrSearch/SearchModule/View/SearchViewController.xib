@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="FlickrSearch" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="CAk-Es-g5K" id="vSG-9G-scw"/>
+                <outlet property="searchBar" destination="YSM-S5-5MV" id="5QL-8W-Iue"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,14 +19,39 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" placeholder="search images" translatesAutoresizingMaskIntoConstraints="NO" id="YSM-S5-5MV">
+                    <rect key="frame" x="0.0" y="65" width="414" height="51"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CAk-Es-g5K">
+                    <rect key="frame" x="0.0" y="116" width="414" height="734"/>
+                    <color key="backgroundColor" red="0.14117647059999999" green="0.94901960780000005" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EJM-ju-WeD">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="-72" y="92"/>
+            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+            <constraints>
+                <constraint firstItem="CAk-Es-g5K" firstAttribute="top" secondItem="YSM-S5-5MV" secondAttribute="bottom" symbolic="YES" id="GaY-0j-8Jd"/>
+                <constraint firstItem="YSM-S5-5MV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MdN-dF-YRY"/>
+                <constraint firstItem="YSM-S5-5MV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="V99-7Z-Lw9"/>
+                <constraint firstItem="CAk-Es-g5K" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Vw8-i8-aQw"/>
+                <constraint firstItem="CAk-Es-g5K" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kDj-VU-FVH"/>
+                <constraint firstItem="YSM-S5-5MV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="21" id="mTy-8E-Tjk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CAk-Es-g5K" secondAttribute="bottom" constant="12" id="qo4-Do-xG4"/>
+            </constraints>
+            <point key="canvasLocation" x="-72.463768115942031" y="91.741071428571431"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

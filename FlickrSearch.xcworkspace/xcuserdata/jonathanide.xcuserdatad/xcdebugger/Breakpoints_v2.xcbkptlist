@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CFF71323-3699-432E-8BCF-B2B13B787981"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "13A142D4-0C7C-4FA1-8A83-8541D3BD250C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrSearchTests/FlickrSearchTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "FlickrSearchTests"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F55E8376-2967-4E6E-8484-887360265EB1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrSearch/API/FlickrDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "search(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E71BE7EC-DD6E-448A-A5E1-BC2E567C2DFC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrSearch/API/FlickrDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "search(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3375CA43-55DE-4D21-848B-7498FF319877"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrSearch/API/FlickrDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "search(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrSearch/DataSource/FlickrDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "search(for:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25 - f6d88041b84ac0e6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (RxSwift.AnyObserver&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;) -&gt; RxSwift.Disposable in FlickrSearch.FlickrDataSource.search(for: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.Observable&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;"
+                  moduleName = "FlickrSearch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jonathanide/myprojects/FlickrSearch/FlickrSearch/DataSource/FlickrDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "1356">
+               </Location>
+               <Location
+                  uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25 - 5d42bf328cbd466"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;) -&gt; RxSwift.Disposable in FlickrSearch.FlickrDataSource.search(for: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.Observable&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;"
+                  moduleName = "FlickrSearch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jonathanide/myprojects/FlickrSearch/FlickrSearch/DataSource/FlickrDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "296">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

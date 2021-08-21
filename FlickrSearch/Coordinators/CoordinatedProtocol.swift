@@ -11,3 +11,6 @@ import Foundation
 protocol CoordinatedProtocol {
     var coordinator : CoordinatorProtocol? { get set }
 }
+
+
+extension SearchViewController : CoordinatedProtocol{}

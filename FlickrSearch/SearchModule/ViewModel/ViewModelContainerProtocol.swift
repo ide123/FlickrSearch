@@ -10,3 +10,5 @@ import Foundation
 protocol ViewModelContainerProtocol {
     var viewModel : ViewModelProtocol? { get set }
 }
+
+extension SearchViewController : ViewModelContainerProtocol{}

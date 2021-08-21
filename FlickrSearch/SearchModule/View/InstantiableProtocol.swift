@@ -15,7 +15,7 @@ protocol InstantiableProtocol {
 }
 
 extension InstantiableProtocol where Self:UIViewController & ViewModelContainerProtocol & CoordinatedProtocol {
-
+    /// Allows us to load the View Controller from a Nib File and perform setter DI with ViewModel andCoordinator
     static func loadFromNib(with viewModel: ViewModelProtocol, coordinator:CoordinatorProtocol) -> Self {
         let fullName = NSStringFromClass(self)
         let className = fullName.components(separatedBy: ".")[1]
@@ -24,7 +24,6 @@ extension InstantiableProtocol where Self:UIViewController & ViewModelContainerP
         vc.coordinator = coordinator
         return vc
     }
- 
 }
 
 extension SearchViewController : InstantiableProtocol{}
