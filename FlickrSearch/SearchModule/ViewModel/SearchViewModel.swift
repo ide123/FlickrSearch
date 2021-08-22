@@ -18,6 +18,7 @@ class SearchViewModel : NSObject{
     }
     /// Main Search - input term - output optional SearchResults
     func search(for term: String) -> Observable<[ImageSearchResult]> {
+        print("VM ")
         return model.search(for: term)
     }
     

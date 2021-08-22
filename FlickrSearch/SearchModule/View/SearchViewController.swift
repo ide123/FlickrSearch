@@ -30,8 +30,13 @@ class SearchViewController: UIViewController {
         let searchTermObs  = searchBar.rx.text.asObservable()
         _ = searchEventObs.withLatestFrom(searchTermObs).subscribe { [weak self] evt in
             if let term = evt.element {
-                /// Todo get Observable of Results
-                _ = (self?.viewModel as? SearchableProtocol)?.search(for: term!)
+                /// Search with the Term
+                (self?.viewModel as? SearchableProtocol)?.search(for: term!).subscribe({ evts in
+                    if let searchResults = evts.element {
+                        print("VC: \(searchResults)")
+                    }
+                })
+                /// Hide the Keyboard
                 self?.searchBar.resignFirstResponder()
             }
         }.disposed(by: disposeBag)

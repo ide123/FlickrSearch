@@ -68,53 +68,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FlickrSearch/DataSource/FlickrDataSource.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "search(for:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25 - f6d88041b84ac0e6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (RxSwift.AnyObserver&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;) -&gt; RxSwift.Disposable in FlickrSearch.FlickrDataSource.search(for: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.Observable&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;"
-                  moduleName = "FlickrSearch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jonathanide/myprojects/FlickrSearch/FlickrSearch/DataSource/FlickrDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "1356">
-               </Location>
-               <Location
-                  uuid = "6566E1B5-FB72-41B7-874A-4F0ADC68DC25 - 5d42bf328cbd466"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;) -&gt; RxSwift.Disposable in FlickrSearch.FlickrDataSource.search(for: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.Observable&lt;Swift.Array&lt;FlickrSearch.ImageSearchResult&gt;&gt;"
-                  moduleName = "FlickrSearch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jonathanide/myprojects/FlickrSearch/FlickrSearch/DataSource/FlickrDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36"
-                  offsetFromSymbolStart = "296">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

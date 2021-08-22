@@ -8,12 +8,30 @@
 import Foundation
 import RxSwift
 
-struct JSONSearchResult : Codable {
-    ///
+/// Image URL  Result
+struct ImageURLResult {
+    ///Variables for URL
+    var id     : String
+    var farm   : Int
+    var secret : String
+    var server : String
+    var title  : String?
+    /// Return the URL composed from the properties
+    var url : String {
+        get {
+            let start =  "http://farm" + String(farm) + ".static.flickr.com/"
+            let end   =  server + "/" + id + "_" + secret + ".jpg"
+            return start + end
+        }
+    }
+    
 }
 
-struct ImageSearchResult : Codable {
-    ///
+/// Returned from Search
+struct ImageSearchResult {
+    ///Variables for URL
+    var title  : String?
+    var image  : UIImage?
 }
 
 class SearchModel {
@@ -26,9 +44,15 @@ class SearchModel {
     }
     ///
     func search(for term:String?) -> Observable<[ImageSearchResult]>{
-        let results = dataSource.search(for:term){
+        
+        return Observable<[ImageSearchResult]>.create { [weak self] observer in
+            self?.dataSource.search(for: term) { imageResults in
+                print("Model: \(imageResults.count)")
+                observer.onNext(imageResults)
+            }
+            return Disposables.create()
         }
-        return Observable.from([])
+  
     }
 }
 
