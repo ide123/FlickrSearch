@@ -9,8 +9,7 @@ import Foundation
 import RxSwift
 
 protocol DataSourceProtocol {
-    func search(for term:String?,completion:@escaping ([ImageSearchResult]) -> Void)
+    func search(for term: String?, completion:@escaping ([ImageSearchResult]) -> Void)
 }
 
-extension FlickrDataSource: DataSourceProtocol{ }
-
+extension FlickrDataSource: DataSourceProtocol { }

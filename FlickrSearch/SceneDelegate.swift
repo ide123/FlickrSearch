@@ -11,9 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+
         // Use this method to configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // Scenes allow multi-window based apps - this delegate is for all scenes in the App.
         if let windowScene = scene as? UIWindowScene {
@@ -30,15 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             /// Make the window show
             window.makeKeyAndVisible()
         }
-   
+
     }
-    
-    deinit{
+
+    deinit {
         print("deinit \(self)")
     }
 
-  
-
-
 }
-

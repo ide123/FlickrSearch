@@ -35,22 +35,22 @@ import SwiftyJSON
  */
 ///
 /// Flickr Access Key & Domain + Constants -
-///let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
-let ACCESS_KEY     = "92370f28e0d889c964a834a85d1790d3"
+/// let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
+let ACCESSKEY     = "92370f28e0d889c964a834a85d1790d3"
 let DOMAIN         = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
-let DOMAIN_WITHKEY = DOMAIN + ACCESS_KEY
+let DOMAINWITHKEY = DOMAIN + ACCESSKEY
 let PARAMETERS     = "&format=json&nojsoncallback=1"
 
 public class FlickrDataSource {
-  
+
     /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
     /// Uses escaping closure to return array of seach results
-    func search(for term:String?, completion:@escaping ([ImageSearchResult]) -> Void){
-        
+    func search(for term: String?, completion:@escaping ([ImageSearchResult]) -> Void) {
+
         var imageSearchResults    =  [ImageSearchResult]()
         var imageURLResults       =  [ImageURLResult]()
         let group                 =  DispatchGroup()
-        
+
         /// Get the JSON meta data from the Search Term
         if let term = term {
             if let url = self.fullJsonURL(term) {
@@ -76,34 +76,34 @@ public class FlickrDataSource {
                             print("URL: \(imageURLResult.url)")
                             return imageURLResult
                         }))!
-                        
+
                         group.leave()
-                        
+
                         /// Now get the Actual Images
                         imageSearchResults = imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
                             group.enter()
-                            var imageSearchResult : ImageSearchResult?
-                            AF.request(imageURLResult.url,method:.get).response { response in
+                            var imageSearchResult: ImageSearchResult?
+                            AF.request(imageURLResult.url, method: .get).response { response in
                                 switch response.result {
-                                
+
                                 case .success(let responseData):
-                                    let image = UIImage(data: responseData!, scale:1)
+                                    let image = UIImage(data: responseData!, scale: 1)
                                     imageSearchResult = ImageSearchResult(title: imageURLResult.title, image: UIImageView(image: image))
                                     imageSearchResults.append(imageSearchResult!)
                                 case .failure(let error):
-                                    print("error--->",error)
+                                    print("error--->", error)
                                 }
-                                
+
                                 group.leave()
                             }
                             return imageSearchResult
                         }
                         /// Sync. completion of all tasks - call completion with the Image data
-                        group.notify(queue:DispatchQueue.global()){
+                        group.notify(queue: DispatchQueue.global()) {
                             print("complete \(imageSearchResults.count)")
                             completion(imageSearchResults)
                         }
-                        
+
                     case .failure(let error):
                         print(error)
                     }
@@ -111,12 +111,11 @@ public class FlickrDataSource {
                 )}
         }
     }
-    
+
     /// Get the Json URL (encoded) with added search term
-    let fullJsonURL = { (term:String) -> String? in
-        var preencoded =  DOMAIN_WITHKEY + "&text=" + term + PARAMETERS
+    let fullJsonURL = { (term: String) -> String? in
+        var preencoded =  DOMAINWITHKEY + "&text=" + term + PARAMETERS
         return  preencoded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
-    
-}
 
+}

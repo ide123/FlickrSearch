@@ -67,26 +67,40 @@
                         <constraint firstItem="bvy-gP-Mmp" firstAttribute="centerX" secondItem="G3G-Yc-P7w" secondAttribute="centerX" id="g1E-Jz-q6t"/>
                     </constraints>
                 </view>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hox-9p-ySw">
+                    <rect key="frame" x="0.0" y="10" width="414" height="55"/>
+                    <color key="backgroundColor" red="0.14117647059999999" green="0.94901960780000005" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <textAttributes key="titleTextAttributes">
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    </textAttributes>
+                    <items>
+                        <navigationItem id="a2d-Az-pGB"/>
+                    </items>
+                </navigationBar>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
             <constraints>
                 <constraint firstItem="G3G-Yc-P7w" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="2Qu-QF-Yy3"/>
                 <constraint firstItem="CAk-Es-g5K" firstAttribute="top" secondItem="YSM-S5-5MV" secondAttribute="bottom" symbolic="YES" id="GaY-0j-8Jd"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MdN-dF-YRY"/>
+                <constraint firstItem="YSM-S5-5MV" firstAttribute="top" secondItem="hox-9p-ySw" secondAttribute="bottom" id="Nix-1A-5Kx"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="V99-7Z-Lw9"/>
                 <constraint firstItem="CAk-Es-g5K" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Vw8-i8-aQw"/>
                 <constraint firstItem="CAk-Es-g5K" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kDj-VU-FVH"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="21" id="mTy-8E-Tjk"/>
+                <constraint firstItem="hox-9p-ySw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="msw-YU-jcV"/>
+                <constraint firstItem="hox-9p-ySw" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="qEd-Wl-05H"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CAk-Es-g5K" secondAttribute="bottom" constant="12" id="qo4-Do-xG4"/>
                 <constraint firstItem="G3G-Yc-P7w" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rLX-xA-ITg"/>
+                <constraint firstItem="hox-9p-ySw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="sRO-EM-kD0"/>
             </constraints>
             <point key="canvasLocation" x="-72.463768115942031" y="91.741071428571431"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

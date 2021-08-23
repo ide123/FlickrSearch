@@ -10,6 +10,6 @@ import Foundation
 /// This is a marker for a  Generic ViewModel Type
 protocol ViewModelProtocol {}
 
-extension SearchViewModel: SearchableProtocol{
-   
+extension SearchViewModel: SearchableProtocol {
+
 }

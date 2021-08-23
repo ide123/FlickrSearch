@@ -9,8 +9,7 @@ import Foundation
 
 /// View Controllers are Coordinated - and have  a ref to a coordinator
 protocol CoordinatedProtocol {
-    var coordinator : CoordinatorProtocol? { get set }
+    var coordinator: CoordinatorProtocol? { get set }
 }
 
-
-extension SearchViewController : CoordinatedProtocol{}
+extension SearchViewController: CoordinatedProtocol {}

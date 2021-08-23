@@ -8,7 +8,8 @@ import Foundation
 
 /// This means the conforming Class contains a ViewModel reference
 protocol ViewModelContainerProtocol {
-    var viewModel : ViewModelProtocol? { get set }
+    associatedtype T
+    var viewModel: T? { get set }
 }
 
-extension SearchViewController : ViewModelContainerProtocol{}
+extension SearchViewController: ViewModelContainerProtocol {}
