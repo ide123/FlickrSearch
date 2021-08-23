@@ -29,6 +29,7 @@
 		D3A984C026D0909F003D4581 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BF26D0909F003D4581 /* SearchableProtocol.swift */; };
 		D3A984C226D09153003D4581 /* FlickrDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984C126D09153003D4581 /* FlickrDataSource.swift */; };
 		D3A984C526D093A4003D4581 /* DataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984C426D093A4003D4581 /* DataSourceProtocol.swift */; };
+		D3D5E43226D2584B002DFC66 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5E43126D2584B002DFC66 /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		D3A984BF26D0909F003D4581 /* SearchableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
 		D3A984C126D09153003D4581 /* FlickrDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrDataSource.swift; sourceTree = "<group>"; };
 		D3A984C426D093A4003D4581 /* DataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceProtocol.swift; sourceTree = "<group>"; };
+		D3D5E43126D2584B002DFC66 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		D4F127F02AF23A4E9B96FEAE /* Pods-FlickrSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-FlickrSearchTests/Pods-FlickrSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E2C29F1C54E2E610D8E97897 /* Pods_FlickrSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlickrSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E35744E1DD71ED91C52A0432 /* Pods-FlickrSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrSearch.release.xcconfig"; path = "Target Support Files/Pods-FlickrSearch/Pods-FlickrSearch.release.xcconfig"; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				D3A984AB26D0723B003D4581 /* SearchViewController.xib */,
 				D3A984AA26D0723B003D4581 /* SearchViewController.swift */,
 				D3A984B726D07660003D4581 /* InstantiableProtocol.swift */,
+				D3D5E43126D2584B002DFC66 /* ImageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 			buildConfigurationList = D3A9849B26D06A3D003D4581 /* Build configuration list for PBXNativeTarget "FlickrSearch" */;
 			buildPhases = (
 				2C042A4547FF4BEF6265AC7D /* [CP] Check Pods Manifest.lock */,
+				D318501226D3580200297618 /* ShellScript */,
 				D3A9846D26D06A39003D4581 /* Sources */,
 				D3A9846E26D06A39003D4581 /* Frameworks */,
 				D3A9846F26D06A39003D4581 /* Resources */,
@@ -452,6 +456,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlickrSearchTests/Pods-FlickrSearchTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D318501226D3580200297618 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null; then\n  ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -472,6 +493,7 @@
 				D3A9847526D06A39003D4581 /* AppDelegate.swift in Sources */,
 				D3A984C026D0909F003D4581 /* SearchableProtocol.swift in Sources */,
 				D3A984C526D093A4003D4581 /* DataSourceProtocol.swift in Sources */,
+				D3D5E43226D2584B002DFC66 /* ImageCell.swift in Sources */,
 				D3A984B226D07444003D4581 /* CoordinatedProtocol.swift in Sources */,
 				D3A9847726D06A39003D4581 /* SceneDelegate.swift in Sources */,
 			);

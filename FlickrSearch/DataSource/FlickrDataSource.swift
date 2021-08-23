@@ -1,7 +1,9 @@
 //
 //  FlickrDataSource.swift
 //  FlickrSearch
+//
 //  Flickr Specific Data Source for Images
+//
 //  Created by jonathan ide on 21/8/21.
 //
 
@@ -10,13 +12,8 @@ import Alamofire
 import RxSwift
 import SwiftyJSON
 
-/// Flickr Access Key & Domain + Constants
-let ACCESS_KEY = "96358825614a5d3b1a1c3fd87fca2b47"
-let PRE_DOMAIN    = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
-let PRE_DOMAIN_WITHKEY = PRE_DOMAIN + ACCESS_KEY
-let POST_DOMAIN = "&format=json&nojsoncallback=1"
-/// URL for Image
-///http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
+/// URL format for  Image load is
+/// http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
 /// Typical Response
 /**"photos": {
  "page": 1,
@@ -35,19 +32,19 @@ let POST_DOMAIN = "&format=json&nojsoncallback=1"
  "isfriend": 0,
  "isfamily": 0
  },
- {
  */
-
+///
+/// Flickr Access Key & Domain + Constants -
+///let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
+let ACCESS_KEY     = "92370f28e0d889c964a834a85d1790d3"
+let DOMAIN         = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
+let DOMAIN_WITHKEY = DOMAIN + ACCESS_KEY
+let PARAMETERS     = "&format=json&nojsoncallback=1"
 
 public class FlickrDataSource {
-    
-    /// Get the Json URL (encoded)
-    let fullJsonURL = { (word:String) -> String? in
-        var preencoded =  PRE_DOMAIN_WITHKEY + "&text=" + word + POST_DOMAIN
-        return  preencoded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-    }
-    
-    /// Search for Images
+  
+    /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
+    /// Uses escaping closure to return array of seach results
     func search(for term:String?, completion:@escaping ([ImageSearchResult]) -> Void){
         
         var imageSearchResults    =  [ImageSearchResult]()
@@ -58,7 +55,6 @@ public class FlickrDataSource {
         if let term = term {
             if let url = self.fullJsonURL(term) {
                 group.enter()
-                print("URL \(url)")
                 AF.request(url).responseJSON(completionHandler: { response in
                     switch response.result {
                     case .success(let value):
@@ -77,37 +73,34 @@ public class FlickrDataSource {
                             }
                             /// Create a URL result
                             let imageURLResult = ImageURLResult(id: photoID, farm: farm, secret: secret, server: server, title: title)
+                            print("URL: \(imageURLResult.url)")
                             return imageURLResult
                         }))!
                         
-                        //print("Results2 :\(imageURLResults)")
                         group.leave()
                         
+                        /// Now get the Actual Images
                         imageSearchResults = imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
                             group.enter()
-                            print("enter")
                             var imageSearchResult : ImageSearchResult?
                             AF.request(imageURLResult.url,method:.get).response { response in
                                 switch response.result {
                                 
                                 case .success(let responseData):
                                     let image = UIImage(data: responseData!, scale:1)
-                                    imageSearchResult = ImageSearchResult(title: imageURLResult.title, image: image)
+                                    imageSearchResult = ImageSearchResult(title: imageURLResult.title, image: UIImageView(image: image))
                                     imageSearchResults.append(imageSearchResult!)
-                                //print(">Image: \(imageSearchResult)")
                                 case .failure(let error):
                                     print("error--->",error)
                                 }
                                 
                                 group.leave()
-                                print("leave")
                             }
                             return imageSearchResult
                         }
-                        /// Sync. completion of all tasks
+                        /// Sync. completion of all tasks - call completion with the Image data
                         group.notify(queue:DispatchQueue.global()){
-                            //print("complete \(imageSearchResults)")
-                            print("complete")
+                            print("complete \(imageSearchResults.count)")
                             completion(imageSearchResults)
                         }
                         
@@ -118,5 +111,12 @@ public class FlickrDataSource {
                 )}
         }
     }
+    
+    /// Get the Json URL (encoded) with added search term
+    let fullJsonURL = { (term:String) -> String? in
+        var preencoded =  DOMAIN_WITHKEY + "&text=" + term + PARAMETERS
+        return  preencoded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
+    
 }
 

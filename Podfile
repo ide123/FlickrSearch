@@ -8,6 +8,7 @@ target 'FlickrSearch' do
     pod 'RxCocoa', '~> 5'
     pod 'Alamofire', '~> 5.4'
     pod 'SwiftyJSON'
+    pod 'SwiftLint', '~> 0.43'
 end
 target 'FlickrSearchTests' do
   inherit! :search_paths

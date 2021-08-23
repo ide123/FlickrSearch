@@ -7,11 +7,19 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-SemiBold.ttf">
+            <string>Poppins-SemiBold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="FlickrSearch" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="CAk-Es-g5K" id="vSG-9G-scw"/>
+                <outlet property="collectionView" destination="CAk-Es-g5K" id="HPH-3X-sOi"/>
                 <outlet property="searchBar" destination="YSM-S5-5MV" id="5QL-8W-Iue"/>
+                <outlet property="spinnerActivityView" destination="VBX-67-7Mz" id="DoF-iA-h68"/>
+                <outlet property="spinnerLabelView" destination="bvy-gP-Mmp" id="juK-sQ-ZiJ"/>
+                <outlet property="spinnerView" destination="G3G-Yc-P7w" id="x6F-kl-js4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,16 +36,42 @@
                     <rect key="frame" x="0.0" y="116" width="414" height="734"/>
                     <color key="backgroundColor" red="0.14117647059999999" green="0.94901960780000005" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EJM-ju-WeD">
-                        <size key="itemSize" width="128" height="128"/>
+                        <size key="itemSize" width="120" height="120"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3G-Yc-P7w" userLabel="SpinnerView">
+                    <rect key="frame" x="167" y="408" width="80" height="80"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VBX-67-7Mz">
+                            <rect key="frame" x="21.5" y="21.5" width="37" height="37"/>
+                            <color key="color" systemColor="systemYellowColor"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvy-gP-Mmp">
+                            <rect key="frame" x="19" y="66.5" width="42" height="12"/>
+                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="10"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="XOL-tB-aNd"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="37s-8f-FvX"/>
+                        <constraint firstItem="VBX-67-7Mz" firstAttribute="centerY" secondItem="G3G-Yc-P7w" secondAttribute="centerY" id="BD3-p2-e79"/>
+                        <constraint firstAttribute="height" constant="80" id="LGq-4g-Eio"/>
+                        <constraint firstItem="VBX-67-7Mz" firstAttribute="centerX" secondItem="G3G-Yc-P7w" secondAttribute="centerX" id="XnY-iL-Qj7"/>
+                        <constraint firstItem="bvy-gP-Mmp" firstAttribute="top" secondItem="VBX-67-7Mz" secondAttribute="bottom" constant="8" id="dOO-1b-Bmk"/>
+                        <constraint firstItem="bvy-gP-Mmp" firstAttribute="centerX" secondItem="G3G-Yc-P7w" secondAttribute="centerX" id="g1E-Jz-q6t"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemOrangeColor"/>
             <constraints>
+                <constraint firstItem="G3G-Yc-P7w" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="2Qu-QF-Yy3"/>
                 <constraint firstItem="CAk-Es-g5K" firstAttribute="top" secondItem="YSM-S5-5MV" secondAttribute="bottom" symbolic="YES" id="GaY-0j-8Jd"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MdN-dF-YRY"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="V99-7Z-Lw9"/>
@@ -45,6 +79,7 @@
                 <constraint firstItem="CAk-Es-g5K" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kDj-VU-FVH"/>
                 <constraint firstItem="YSM-S5-5MV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="21" id="mTy-8E-Tjk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CAk-Es-g5K" secondAttribute="bottom" constant="12" id="qo4-Do-xG4"/>
+                <constraint firstItem="G3G-Yc-P7w" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rLX-xA-ITg"/>
             </constraints>
             <point key="canvasLocation" x="-72.463768115942031" y="91.741071428571431"/>
         </view>
@@ -52,6 +87,9 @@
     <resources>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

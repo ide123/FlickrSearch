@@ -24,19 +24,25 @@ struct ImageURLResult {
             return start + end
         }
     }
-    
 }
 
 /// Returned from Search
 struct ImageSearchResult {
     ///Variables for URL
     var title  : String?
-    var image  : UIImage?
+    var image  : UIImageView?
 }
 
+/// Basic Status -can be expanded as required.
+enum LOADING_STATUS {
+    case LOADING_COMPLETE
+}
+
+/// 
 class SearchModel {
     
     var dataSource : DataSourceProtocol!
+    var loadingStatus = PublishSubject<LOADING_STATUS>()
     
     /// Inject DataSource - this
     init(dataSource:DataSourceProtocol){
@@ -49,6 +55,7 @@ class SearchModel {
             self?.dataSource.search(for: term) { imageResults in
                 print("Model: \(imageResults.count)")
                 observer.onNext(imageResults)
+                self?.loadingStatus.onNext(.LOADING_COMPLETE)
             }
             return Disposables.create()
         }
