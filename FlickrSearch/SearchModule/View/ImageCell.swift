@@ -19,5 +19,17 @@ public class ImageCell: UICollectionViewCell {
     }
 
     @IBOutlet var imageView: UIImageView!
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel?
+    
+    /// This is important.
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        /// Essential - we need to clear cell content subviews
+        /// because of cell reuse - if not done multiple content (images) will be overlaid
+        /// on top
+        for subview in self.contentView.subviews {
+            subview.removeFromSuperview()
+        }
+    }
+ 
 }

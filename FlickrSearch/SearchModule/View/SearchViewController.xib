@@ -17,8 +17,6 @@
             <connections>
                 <outlet property="collectionView" destination="CAk-Es-g5K" id="HPH-3X-sOi"/>
                 <outlet property="searchBar" destination="YSM-S5-5MV" id="5QL-8W-Iue"/>
-                <outlet property="spinnerActivityView" destination="VBX-67-7Mz" id="DoF-iA-h68"/>
-                <outlet property="spinnerLabelView" destination="bvy-gP-Mmp" id="juK-sQ-ZiJ"/>
                 <outlet property="spinnerView" destination="G3G-Yc-P7w" id="x6F-kl-js4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

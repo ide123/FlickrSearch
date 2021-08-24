@@ -10,24 +10,24 @@ import RxSwift
 
 class SearchViewModel: NSObject {
 
-    var model: ModelProtocol!
-    var spinnerViewBS: BehaviorSubject<Bool> = BehaviorSubject(value: true)
-    var disposeBag    = DisposeBag()
+    var model: SearchModelProtocol!
+    var disposeBag = DisposeBag()
+    var searchSpinnerViewBS: BehaviorSubject<Bool> = BehaviorSubject(value: true)
 
     /// Initialise with Model
-    init(model: ModelProtocol) {
+    init(model: SearchModelProtocol) {
+        super.init()
         self.model = model
         model.loadingStatus.map { _ -> Bool in
             return true
-        }.bind(to: spinnerViewBS.asObserver()).disposed(by: disposeBag)
+        }.bind(to: searchSpinnerViewBS.asObserver()).disposed(by: disposeBag)
     }
     /// Main Search - input term - output optional SearchResults
     func search(for term: String) -> Observable<[ImageSearchResult]> {
-        let obs =  model.search(for: term)
-        return obs
+        return model.search(for: term)
     }
     /// Crude Check Size of Term
-    func validate(term: String) -> Bool {
+    func searchTermValidation(term: String) -> Bool {
         if !term.isEmpty {
             return true
         } else {
@@ -35,7 +35,4 @@ class SearchViewModel: NSObject {
         }
     }
 
-    deinit {
-        print("deinit \(self)")
-    }
 }

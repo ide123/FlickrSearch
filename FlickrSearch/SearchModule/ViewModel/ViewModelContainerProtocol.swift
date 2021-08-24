@@ -6,7 +6,7 @@
 //
 import Foundation
 
-/// This means the conforming Class contains a ViewModel reference
+/// This means the conforming Class contains a generic ViewModel reference
 protocol ViewModelContainerProtocol {
     associatedtype T
     var viewModel: T? { get set }

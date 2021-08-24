@@ -2,7 +2,7 @@
 //  FlickrDataSource.swift
 //  FlickrSearch
 //
-//  Flickr Specific Data Source for Images
+//  Self-Contained Flickr Specific Data Source for Images
 //
 //  Created by jonathan ide on 21/8/21.
 //
@@ -12,27 +12,38 @@ import Alamofire
 import RxSwift
 import SwiftyJSON
 
+/// Image URL  Result
+struct ImageURLResult {
+    /// Variables for URL
+    var id: String
+    var farm: Int
+    var secret: String
+    var server: String
+    var title: String?
+    /// Return the URL composed from the properties
+    var url: String {
+        get {
+            let start =  "http://farm" + String(farm) + ".static.flickr.com/"
+            let end   =  server + "/" + id + "_" + secret + ".jpg"
+            return start + end
+        }
+    }
+}
+
+/// Returned from Search
+struct ImageSearchResult {
+    /// Variables for URL
+    var title: String?
+    var image: UIImageView?
+}
+
+/// Basic Status -can be expanded as required.
+enum LOADINGSTATUS {
+    case LOADINGCOMPLETE
+}
+
 /// URL format for  Image load is
 /// http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
-/// Typical Response
-/**"photos": {
- "page": 1,
- "pages": 1360,
- "perpage": 100,
- "total": 135956,
- "photo": [
- {
- "id": "51392247909",
- "owner": "61623396@N04",
- "secret": "4562dfac6b",
- "server": "65535",
- "farm": 66,
- "title": "Onion",
- "ispublic": 1,
- "isfriend": 0,
- "isfamily": 0
- },
- */
 ///
 /// Flickr Access Key & Domain + Constants -
 /// let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
@@ -73,25 +84,27 @@ public class FlickrDataSource {
                             }
                             /// Create a URL result
                             let imageURLResult = ImageURLResult(id: photoID, farm: farm, secret: secret, server: server, title: title)
-                            print("URL: \(imageURLResult.url)")
                             return imageURLResult
                         }))!
 
                         group.leave()
 
                         /// Now get the Actual Images
-                        imageSearchResults = imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
+                        _ =  imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
                             group.enter()
                             var imageSearchResult: ImageSearchResult?
                             AF.request(imageURLResult.url, method: .get).response { response in
                                 switch response.result {
 
                                 case .success(let responseData):
-                                    let image = UIImage(data: responseData!, scale: 1)
-                                    imageSearchResult = ImageSearchResult(title: imageURLResult.title, image: UIImageView(image: image))
-                                    imageSearchResults.append(imageSearchResult!)
+                                    if let responseData = responseData {
+                                        if let image = UIImage(data: responseData, scale: 1) {
+                                            imageSearchResult = ImageSearchResult(title: imageURLResult.title, image: UIImageView(image: image))
+                                            imageSearchResults.append(imageSearchResult!)
+                                        }
+                                    }
                                 case .failure(let error):
-                                    print("error--->", error)
+                                    print("error", error)
                                 }
 
                                 group.leave()
@@ -100,7 +113,7 @@ public class FlickrDataSource {
                         }
                         /// Sync. completion of all tasks - call completion with the Image data
                         group.notify(queue: DispatchQueue.global()) {
-                            print("complete \(imageSearchResults.count)")
+                            print("Complete \(imageSearchResults.count)")
                             completion(imageSearchResults)
                         }
 

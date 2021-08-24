@@ -1,5 +1,6 @@
 //
 //  SearchModel.swift
+//  Returns Observable of Results
 //  FlickrSearch
 //
 //  Created by jonathan ide on 21/8/21.
@@ -8,53 +9,24 @@
 import Foundation
 import RxSwift
 
-/// Image URL  Result
-struct ImageURLResult {
-    /// Variables for URL
-    var id: String
-    var farm: Int
-    var secret: String
-    var server: String
-    var title: String?
-    /// Return the URL composed from the properties
-    var url: String {
-        get {
-            let start =  "http://farm" + String(farm) + ".static.flickr.com/"
-            let end   =  server + "/" + id + "_" + secret + ".jpg"
-            return start + end
-        }
-    }
-}
-
-/// Returned from Search
-struct ImageSearchResult {
-    /// Variables for URL
-    var title: String?
-    var image: UIImageView?
-}
-
-/// Basic Status -can be expanded as required.
-enum LOADINGSTATUS {
-    case LOADINGCOMPLETE
-}
-
 /// 
 class SearchModel {
 
     var dataSource: DataSourceProtocol!
     var loadingStatus = PublishSubject<LOADINGSTATUS>()
 
-    /// Inject DataSource - this
+    /// Inject Flickr specific DataSource
     init(dataSource: DataSourceProtocol) {
         self.dataSource = dataSource
     }
-    ///
+    /// Return Observable of Results
     func search(for term: String?) -> Observable<[ImageSearchResult]> {
 
         return Observable<[ImageSearchResult]>.create { [weak self] observer in
             self?.dataSource.search(for: term) { imageResults in
-                print("Model: \(imageResults.count)")
+                /// Notify Observer with results
                 observer.onNext(imageResults)
+                /// Publish an update to stop the Spinner 
                 self?.loadingStatus.onNext(.LOADINGCOMPLETE)
             }
             return Disposables.create()

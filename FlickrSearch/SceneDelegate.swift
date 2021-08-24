@@ -32,8 +32,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     }
 
-    deinit {
-        print("deinit \(self)")
-    }
-
 }

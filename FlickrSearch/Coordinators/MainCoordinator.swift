@@ -54,7 +54,7 @@ class MainCoordinator: NSObject, CoordinatorProtocol, UINavigationControllerDele
 
     }
 
-    /// Not used
+    /// Not used unless we use child coordinators
     /**func childDidFinish(_ child: CoordinatorProtocol?) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {
@@ -64,9 +64,5 @@ class MainCoordinator: NSObject, CoordinatorProtocol, UINavigationControllerDele
             }
         }
     }*/
-
-    deinit {
-        print("deinit \(self)")
-    }
 
 }

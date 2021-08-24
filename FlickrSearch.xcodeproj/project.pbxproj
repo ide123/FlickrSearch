@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		236E6B4D91E5D44F5451BAE4 /* Pods_FlickrSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C29F1C54E2E610D8E97897 /* Pods_FlickrSearchTests.framework */; };
 		7DB0E39DF2D1028A4136A533 /* Pods_FlickrSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AA16609BCC3AF2B0BF6726 /* Pods_FlickrSearch.framework */; };
+		D318506326D4A61300297618 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318506226D4A61300297618 /* ModelProtocol.swift */; };
 		D3A9847526D06A39003D4581 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9847426D06A39003D4581 /* AppDelegate.swift */; };
 		D3A9847726D06A39003D4581 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9847626D06A39003D4581 /* SceneDelegate.swift */; };
 		D3A9847E26D06A3C003D4581 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3A9847D26D06A3C003D4581 /* Assets.xcassets */; };
@@ -25,8 +26,8 @@
 		D3A984B826D07660003D4581 /* InstantiableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984B726D07660003D4581 /* InstantiableProtocol.swift */; };
 		D3A984BA26D076FC003D4581 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984B926D076FC003D4581 /* ViewModelProtocol.swift */; };
 		D3A984BC26D078E8003D4581 /* ViewModelContainerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BB26D078E8003D4581 /* ViewModelContainerProtocol.swift */; };
-		D3A984BE26D07F6E003D4581 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BD26D07F6E003D4581 /* ModelProtocol.swift */; };
-		D3A984C026D0909F003D4581 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BF26D0909F003D4581 /* SearchableProtocol.swift */; };
+		D3A984BE26D07F6E003D4581 /* SearchModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BD26D07F6E003D4581 /* SearchModelProtocol.swift */; };
+		D3A984C026D0909F003D4581 /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984BF26D0909F003D4581 /* SearchViewModelProtocol.swift */; };
 		D3A984C226D09153003D4581 /* FlickrDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984C126D09153003D4581 /* FlickrDataSource.swift */; };
 		D3A984C526D093A4003D4581 /* DataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A984C426D093A4003D4581 /* DataSourceProtocol.swift */; };
 		D3D5E43226D2584B002DFC66 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5E43126D2584B002DFC66 /* ImageCell.swift */; };
@@ -53,6 +54,7 @@
 		2D645DE8E3A5FBA360162BC1 /* Pods-FlickrSearchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrSearchTests.release.xcconfig"; path = "Target Support Files/Pods-FlickrSearchTests/Pods-FlickrSearchTests.release.xcconfig"; sourceTree = "<group>"; };
 		51B4E5F904A37D1A6313B3BE /* Pods-FlickrSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrSearch.debug.xcconfig"; path = "Target Support Files/Pods-FlickrSearch/Pods-FlickrSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		53AA16609BCC3AF2B0BF6726 /* Pods_FlickrSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlickrSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D318506226D4A61300297618 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		D3A9847126D06A39003D4581 /* FlickrSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A9847426D06A39003D4581 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3A9847626D06A39003D4581 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,8 +77,8 @@
 		D3A984B726D07660003D4581 /* InstantiableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantiableProtocol.swift; sourceTree = "<group>"; };
 		D3A984B926D076FC003D4581 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		D3A984BB26D078E8003D4581 /* ViewModelContainerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelContainerProtocol.swift; sourceTree = "<group>"; };
-		D3A984BD26D07F6E003D4581 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
-		D3A984BF26D0909F003D4581 /* SearchableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
+		D3A984BD26D07F6E003D4581 /* SearchModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelProtocol.swift; sourceTree = "<group>"; };
+		D3A984BF26D0909F003D4581 /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 		D3A984C126D09153003D4581 /* FlickrDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrDataSource.swift; sourceTree = "<group>"; };
 		D3A984C426D093A4003D4581 /* DataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceProtocol.swift; sourceTree = "<group>"; };
 		D3D5E43126D2584B002DFC66 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D318506126D4936400297618 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D3A984B726D07660003D4581 /* InstantiableProtocol.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		D3A9846826D06A39003D4581 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +170,7 @@
 				D3A984A926D071D2003D4581 /* SearchModule */,
 				D3A984C326D0915D003D4581 /* DataSource */,
 				D3A984A426D0701D003D4581 /* Coordinators */,
+				D318506126D4936400297618 /* Common */,
 				D3A9847426D06A39003D4581 /* AppDelegate.swift */,
 				D3A9847626D06A39003D4581 /* SceneDelegate.swift */,
 				D3A9847D26D06A3C003D4581 /* Assets.xcassets */,
@@ -212,7 +223,6 @@
 			children = (
 				D3A984AB26D0723B003D4581 /* SearchViewController.xib */,
 				D3A984AA26D0723B003D4581 /* SearchViewController.swift */,
-				D3A984B726D07660003D4581 /* InstantiableProtocol.swift */,
 				D3D5E43126D2584B002DFC66 /* ImageCell.swift */,
 			);
 			path = View;
@@ -222,9 +232,9 @@
 			isa = PBXGroup;
 			children = (
 				D3A984B326D074A9003D4581 /* SearchViewModel.swift */,
-				D3A984BF26D0909F003D4581 /* SearchableProtocol.swift */,
-				D3A984B926D076FC003D4581 /* ViewModelProtocol.swift */,
+				D3A984BF26D0909F003D4581 /* SearchViewModelProtocol.swift */,
 				D3A984BB26D078E8003D4581 /* ViewModelContainerProtocol.swift */,
+				D3A984B926D076FC003D4581 /* ViewModelProtocol.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -233,7 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				D3A984B526D07533003D4581 /* SearchModel.swift */,
-				D3A984BD26D07F6E003D4581 /* ModelProtocol.swift */,
+				D3A984BD26D07F6E003D4581 /* SearchModelProtocol.swift */,
+				D318506226D4A61300297618 /* ModelProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -482,16 +493,17 @@
 			files = (
 				D3A984C226D09153003D4581 /* FlickrDataSource.swift in Sources */,
 				D3A984AC26D0723B003D4581 /* SearchViewController.swift in Sources */,
-				D3A984BE26D07F6E003D4581 /* ModelProtocol.swift in Sources */,
+				D3A984BE26D07F6E003D4581 /* SearchModelProtocol.swift in Sources */,
 				D3A984B426D074A9003D4581 /* SearchViewModel.swift in Sources */,
 				D3A984A626D07061003D4581 /* MainCoordinator.swift in Sources */,
 				D3A984B626D07533003D4581 /* SearchModel.swift in Sources */,
 				D3A984BC26D078E8003D4581 /* ViewModelContainerProtocol.swift in Sources */,
 				D3A984B826D07660003D4581 /* InstantiableProtocol.swift in Sources */,
 				D3A984A826D07090003D4581 /* CoordinatorProtocol.swift in Sources */,
+				D318506326D4A61300297618 /* ModelProtocol.swift in Sources */,
 				D3A984BA26D076FC003D4581 /* ViewModelProtocol.swift in Sources */,
 				D3A9847526D06A39003D4581 /* AppDelegate.swift in Sources */,
-				D3A984C026D0909F003D4581 /* SearchableProtocol.swift in Sources */,
+				D3A984C026D0909F003D4581 /* SearchViewModelProtocol.swift in Sources */,
 				D3A984C526D093A4003D4581 /* DataSourceProtocol.swift in Sources */,
 				D3D5E43226D2584B002DFC66 /* ImageCell.swift in Sources */,
 				D3A984B226D07444003D4581 /* CoordinatedProtocol.swift in Sources */,
