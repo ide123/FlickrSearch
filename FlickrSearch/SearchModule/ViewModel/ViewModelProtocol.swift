@@ -7,5 +7,5 @@
 
 import Foundation
 
-/// This is a marker for a  Generic ViewModel Type
+/// This is a marker for a  Generic ViewModel Type - ie. conforming type is a ViewModel 
 protocol ViewModelProtocol {}

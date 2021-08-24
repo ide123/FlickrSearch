@@ -19,7 +19,7 @@ class SearchModel {
     init(dataSource: DataSourceProtocol) {
         self.dataSource = dataSource
     }
-    /// Return Observable of Results
+    /// Return Observable of an Array of  Image SearchResults Structs which contain the Image and a Title
     func search(for term: String?) -> Observable<[ImageSearchResult]> {
 
         return Observable<[ImageSearchResult]>.create { [weak self] observer in

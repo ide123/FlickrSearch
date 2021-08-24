@@ -14,4 +14,5 @@ protocol SearchViewModelProtocol: ViewModelProtocol {
     func search(for term: String)-> Observable<[ImageSearchResult]>
     func searchTermValidation(term: String) -> Bool
 }
+/// Here we conform the ViewModel to the Search "Feature" and that its a ViewModel by type
 extension SearchViewModel: SearchViewModelProtocol { }
