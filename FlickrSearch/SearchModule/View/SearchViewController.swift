@@ -14,27 +14,33 @@ import RxCocoa
 import Alamofire
 
 class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout {
-
+    
     /// Views managed by VC
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var spinnerView: UIView!
-  
+    
     var images = [ImageSearchResult]()
-
+    
     /// Required for Protocol Conformance
     var viewModel: SearchViewModelProtocol?
     var coordinator: CoordinatorProtocol?
-    let reuseIdentifier = "FlickrCell"
-
+    
+    /// Local constants used to manage the view's appearance - its possible the itemsPerRow may be changed by a user
+    /// but this is not a requirement as such so its a constant.
+    private let reuseIdentifier = "FlickrCell"
+    private let controllerTitle = "Flickr Search"
+    private let sectionInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
+    private var itemsPerRow: CGFloat = CGFloat(4)
+    
     /// Dispose of Subscriptions
     var disposeBag = DisposeBag()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// bind in VM
-        self.navigationController?.navigationBar.topItem?.title = "Flickr Search"
+        /// Set Title - NB see coment below - this is not part of DI as a shortcut. 
+        setControllerTitle(title: controllerTitle)
         
         /// Register a Collection View Cell and Set the Rx delegate
         self.collectionView.register(ImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -42,23 +48,23 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
         
         /// View Model is loaded when View Controller is instantiated
         if let viewModel = self.viewModel {
-
+            
             /// Hide Spinner
             _ = viewModel.searchSpinnerViewBS.bind(to: self.spinnerView.rx.isHidden)
-
+            
             /// Fire a search request when user hits search button
             let searchEventObs = searchBar.rx.searchButtonClicked.asObservable()
             let searchTermObs  = searchBar.rx.text.asObservable()
             _ = searchEventObs.withLatestFrom(searchTermObs).subscribe { [weak self] evt in
                 if let term = evt.element {
-
+                    
                     /// Check Term is "valid" i.e. has content
                     if !(viewModel.searchTermValidation(term: term!)) {
                         return
                     }
                     /// Binding sets the datasource directly so we only want this done once per search
                     self?.collectionView.dataSource = nil
-
+                    
                     /// Show spinner - not very obvious - could change to enum & convert to bool
                     /// binds BS direct to isHidden propertty of the UIView displaying the spinner
                     viewModel.searchSpinnerViewBS.onNext(false)
@@ -68,31 +74,39 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
                     /// a lot of boiler plate code.
                     _ = viewModel.search(for: term!).bind(to: (self?.collectionView.rx.items(cellIdentifier: self!.reuseIdentifier))!) { _, imageSearchResult, cell in
                         if let imageView = imageSearchResult.image {
-                            ///
-                            cell.contentView.addSubview(imageView)
-                            cell.contentView.backgroundColor = .white
-                            ///
-                            imageView.contentMode = .scaleAspectFit
-                            imageView.translatesAutoresizingMaskIntoConstraints = false
-                            imageView.leftAnchor.constraint(equalTo: cell.contentView.leftAnchor, constant: 0).isActive = true
-                            imageView.rightAnchor.constraint(equalTo: cell.contentView.rightAnchor, constant: 0).isActive = true
-                            imageView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 0).isActive = true
-                            imageView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: 0).isActive = true
+                            
+                            /// Add the image as a subview of the Cell Content View
+                            _ = Util.configure(cell.contentView) {
+                                $0.addSubview(imageView)
+                                $0.backgroundColor = .white
+                            }
+                            
+                            /// Configure the ImageView within the Collection Cell
+                            _ = Util.configure(imageView) {
+                                $0.contentMode = .scaleAspectFit
+                                $0.translatesAutoresizingMaskIntoConstraints = false
+                                $0.leftAnchor.constraint(equalTo: cell.contentView.leftAnchor, constant: 0).isActive = true
+                                $0.rightAnchor.constraint(equalTo: cell.contentView.rightAnchor, constant: 0).isActive = true
+                                $0.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 0).isActive = true
+                                $0.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: 0).isActive = true
+                            }
                         }
                     }
                     /// Cancel the Keyboard
                     self?.searchBar.resignFirstResponder()
                 }
-
+                
             }.disposed(by: disposeBag)
-
+            
         }
-
+      
     }
-
-    fileprivate let sectionInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
-    let itemsPerRow = CGFloat(4)
-
+    
+}
+/// Extension on Search View Controller - provides some call backs for rotation and spacing + setting the title
+extension SearchViewController {
+    
+    /// Calculate Cell spacing
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -102,18 +116,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
+    /// Shortcut - title could be injected to Controller
+    func setControllerTitle(title: String) {
+        self.navigationController?.navigationBar.topItem?.title = title
     }
     
+    /// Manage the Rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         guard let view = self.collectionView else {

@@ -34,5 +34,7 @@ class SearchViewModel: NSObject {
             return false
         }
     }
+    
+ 
 
 }

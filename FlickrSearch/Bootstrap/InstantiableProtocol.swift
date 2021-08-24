@@ -23,10 +23,10 @@ extension InstantiableProtocol where Self: UIViewController & ViewModelContainer
     static func loadFromNib<T: ViewModelProtocol, C: CoordinatorProtocol>(with viewModel: T, coordinator: C) -> Self {
         let fullName = NSStringFromClass(self)
         let className = fullName.components(separatedBy: ".")[1]
-        var vc = Self(nibName: className, bundle: nil)
-        vc.viewModel = viewModel as? Self.T
-        vc.coordinator = coordinator
-        return vc
+        var viewController = Self(nibName: className, bundle: nil)
+        viewController.viewModel = viewModel as? Self.T
+        viewController.coordinator = coordinator
+        return viewController
     }
 }
 
