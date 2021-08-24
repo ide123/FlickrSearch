@@ -20,10 +20,10 @@ class SearchModel {
         self.dataSource = dataSource
     }
     /// Return Observable of an Array of  Image SearchResults Structs which contain the Image and a Title
-    func search(for term: String?) -> Observable<[ImageSearchResult]> {
+    func search(for term: String?, page: Int=1) -> Observable<[ImageSearchResult]> {
 
         return Observable<[ImageSearchResult]>.create { [weak self] observer in
-            self?.dataSource.search(for: term) { imageResults in
+            self?.dataSource.search(for: term, page: page) { imageResults in
                 /// Notify Observer with results
                 observer.onNext(imageResults)
                 /// Publish an update to stop the Spinner 

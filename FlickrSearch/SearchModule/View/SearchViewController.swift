@@ -39,7 +39,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// Set Title - NB see coment below - this is not part of DI as a shortcut. 
+        /// Set Title - NB see coment below - this is not part of DI as a shortcut.
         setControllerTitle(title: controllerTitle)
         
         /// Register a Collection View Cell and Set the Rx delegate
@@ -72,7 +72,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
                     /// Concise way of binding UICollectionView to its DataSource (as an Observable)
                     /// which is returned by the Search. This may seem a bit obfuscated but it eliminates
                     /// a lot of boiler plate code.
-                    _ = viewModel.search(for: term!).bind(to: (self?.collectionView.rx.items(cellIdentifier: self!.reuseIdentifier))!) { _, imageSearchResult, cell in
+                    _ = viewModel.search(for: term!, page: 1).bind(to: (self?.collectionView.rx.items(cellIdentifier: self!.reuseIdentifier))!) { _, imageSearchResult, cell in
                         if let imageView = imageSearchResult.image {
                             
                             /// Add the image as a subview of the Cell Content View
@@ -80,7 +80,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
                                 $0.addSubview(imageView)
                                 $0.backgroundColor = .white
                             }
-                            
                             /// Configure the ImageView within the Collection Cell
                             _ = Util.configure(imageView) {
                                 $0.contentMode = .scaleAspectFit
@@ -119,6 +118,11 @@ extension SearchViewController {
     /// Shortcut - title could be injected to Controller
     func setControllerTitle(title: String) {
         self.navigationController?.navigationBar.topItem?.title = title
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("did end scrolling")
+        //viewModel?.searchSpinnerViewBS.onNext(false)
     }
     
     /// Manage the Rotation

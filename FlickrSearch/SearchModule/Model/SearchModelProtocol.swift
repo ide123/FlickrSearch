@@ -11,7 +11,7 @@ import RxSwift
 /// This is a marker for a  Generic ViewModel Type
 protocol SearchModelProtocol: ModelProtocol {
     var  loadingStatus: PublishSubject<LOADINGSTATUS> { get set }
-    func search(for term: String?) -> Observable<[ImageSearchResult]>
+    func search(for term: String?, page: Int) -> Observable<[ImageSearchResult]>
 }
 
 extension SearchModel: SearchModelProtocol {}

@@ -47,16 +47,16 @@ enum LOADINGSTATUS {
 ///
 /// Flickr Access Key & Domain + Constants -
 /// let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
-let ACCESSKEY     = "92370f28e0d889c964a834a85d1790d3"
-let DOMAIN         = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
-let DOMAINWITHKEY = DOMAIN + ACCESSKEY
-let PARAMETERS     = "&format=json&nojsoncallback=1"
+private let ACCESSKEY     = "92370f28e0d889c964a834a85d1790d3"
+private let DOMAIN         = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
+private let DOMAINWITHKEY = DOMAIN + ACCESSKEY
+private let PARAMETERS     = "&format=json&nojsoncallback=1&page="
 
 public class FlickrDataSource {
 
     /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
     /// Uses escaping closure to return array of seach results
-    func search(for term: String?, completion:@escaping ([ImageSearchResult]) -> Void) {
+    func search(for term: String?, page: Int=1, completion:@escaping ([ImageSearchResult]) -> Void) {
 
         var imageSearchResults    =  [ImageSearchResult]()
         var imageURLResults       =  [ImageURLResult]()
@@ -64,7 +64,7 @@ public class FlickrDataSource {
 
         /// Get the JSON meta data from the Search Term
         if let term = term {
-            if let url = self.fullJsonURL(term) {
+            if let url = self.fullJsonURL(term, page) {
                 group.enter()
                 AF.request(url).responseJSON(completionHandler: { response in
                     switch response.result {
@@ -125,10 +125,18 @@ public class FlickrDataSource {
         }
     }
 
-    /// Get the Json URL (encoded) with added search term
-    let fullJsonURL = { (term: String) -> String? in
-        var preencoded =  DOMAINWITHKEY + "&text=" + term + PARAMETERS
-        return  preencoded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    /// Get the Json URL (encoded) with added search term and page number
+    let fullJsonURL = { (term: String, page: Int) -> String? in
+        
+       var preencoded =  DOMAINWITHKEY + "&text=" + term
+       var parameters =  PARAMETERS + String(page)
+      
+        guard  let preamble = preencoded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let param =  parameters.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return nil
+        }
+        
+        return preamble + param
+        
     }
 
 }

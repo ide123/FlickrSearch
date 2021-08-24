@@ -23,8 +23,8 @@ class SearchViewModel: NSObject {
         }.bind(to: searchSpinnerViewBS.asObserver()).disposed(by: disposeBag)
     }
     /// Main Search - input term - output optional SearchResults
-    func search(for term: String) -> Observable<[ImageSearchResult]> {
-        return model.search(for: term)
+    func search(for term: String, page: Int) -> Observable<[ImageSearchResult]> {
+        return model.search(for: term, page: page)
     }
     /// Crude Check Size of Term
     func searchTermValidation(term: String) -> Bool {
@@ -34,7 +34,5 @@ class SearchViewModel: NSObject {
             return false
         }
     }
-    
- 
 
 }
