@@ -44,24 +44,23 @@ enum LOADINGSTATUS {
 
 /// URL format for  Image load is
 /// http://farm{farm}.static.flickr.com/{server}/{id}_{secret}.jpg
-///
 /// Flickr Access Key & Domain + Constants -
 /// let ACCESS_KEY     = "96358825614a5d3b1a1c3fd87fca2b47"
 private let ACCESSKEY     = "92370f28e0d889c964a834a85d1790d3"
-private let DOMAIN         = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
+private let DOMAIN        = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="
 private let DOMAINWITHKEY = DOMAIN + ACCESSKEY
-private let PARAMETERS     = "&format=json&nojsoncallback=1&page="
+private let PARAMETERS    = "&format=json&nojsoncallback=1&page="
 
 public class FlickrDataSource {
 
     /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
-    /// Uses escaping closure to return array of seach results
+    /// Uses escaping closure to return array of seach results. Defaults to page 1 if not set.
     func search(for term: String?, page: Int=1, completion:@escaping ([ImageSearchResult]) -> Void) {
 
         var imageSearchResults    =  [ImageSearchResult]()
         var imageURLResults       =  [ImageURLResult]()
         let group                 =  DispatchGroup()
-
+        
         /// Get the JSON meta data from the Search Term
         if let term = term {
             if let url = self.fullJsonURL(term, page) {
@@ -71,7 +70,7 @@ public class FlickrDataSource {
                     case .success(let value):
                         /// Use Swifty JSON
                         let json = JSON(value)
-                        /// Page 1 - all photos
+                        /// Page N - all photos
                         imageURLResults = (json["photos"]["photo"].array?.compactMap({ photo ->  ImageURLResult? in
                             /// Get Image Title - can be Nil
                             let title  = photo["title"].string
@@ -88,14 +87,13 @@ public class FlickrDataSource {
                         }))!
 
                         group.leave()
-
+                        
                         /// Now get the Actual Images
                         _ =  imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
                             group.enter()
                             var imageSearchResult: ImageSearchResult?
                             AF.request(imageURLResult.url, method: .get).response { response in
                                 switch response.result {
-
                                 case .success(let responseData):
                                     if let responseData = responseData {
                                         if let image = UIImage(data: responseData, scale: 1) {
