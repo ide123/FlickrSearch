@@ -56,16 +56,16 @@ public class FlickrDataSource {
     /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
     /// Uses escaping closure to return array of seach results. Defaults to page 1 if not set.
     func search(for term: String?, page: Int=1, completion:@escaping ([ImageSearchResult]) -> Void) {
-
+        
         var imageSearchResults    =  [ImageSearchResult]()
         var imageURLResults       =  [ImageURLResult]()
         let group                 =  DispatchGroup()
         
+        /// Check Term
         guard let term = term else {
             completion(imageSearchResults)
             return
         }
-        
         guard !term.isEmpty else {
             completion(imageSearchResults)
             return
@@ -129,7 +129,6 @@ public class FlickrDataSource {
                 }
             }
             )}
-        
     }
 
     /// Get the Json URL (encoded) with added search term and page number

@@ -62,7 +62,6 @@ class FlickrSearchTests: XCTestCase {
         wait(for: [expectation], timeout: 20, enforceOrder: true)
     }
 
-
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
