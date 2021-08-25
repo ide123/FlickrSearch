@@ -20,8 +20,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var spinnerView: UIView!
     
-    var images = [ImageSearchResult]()
-    
     /// Required for Protocol Conformance
     /// View Model & Coordinator  are loaded when View Controller is instantiated
     var viewModel: SearchViewModelProtocol?
@@ -33,12 +31,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
     private let controllerTitle = "Flickr Search"
     private let sectionInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
     private var itemsPerRow: CGFloat = CGFloat(4)
-    
+
     /// Dispose of Subscriptions
     var disposeBag = DisposeBag()
-    ///
+    
+    /// Temp Buffer stores Results for a given Search term
+    /// Cleared and re-used for each Term.
+    var imageBuffer   = [ImageSearchResult]()
+    /// Used to communicate new results for a given Term - same of different to original term
+    var imageBufferPS = PublishSubject<[ImageSearchResult]>()
+    /// Current Page of Search with Search Term
     var page: Int = 1
     var term: String?
+    /// Last row Index of page
+    var lastIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,22 +56,43 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
         self.collectionView.register(ImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
+        /// Concise way of binding UICollectionView to its DataSource (as an Observable)
+        /// which is returned by the Search.
+        self.imageBufferPS.subscribeOn(MainScheduler.instance).subscribe { evt in
+                if let results = evt.element {
+                    self.collectionView.dataSource = nil
+                    _ = Observable.from(optional: results).bind(to: (self.collectionView.rx.items(cellIdentifier: self.reuseIdentifier))) { _, imageSearchResult, cell in
+                        if let imageView = imageSearchResult.image {
+                            self.configCell(cell: cell, imageView: imageView)
+                        }
+                    }
+                }
+        }.disposed(by: disposeBag)
+        
+        /// Use this to move the Page  Cursor on re-load
+        _ = imageBufferPS.subscribe { _ in
+            self.collectionView.scrollToItem(at: IndexPath(item: self.lastIndex-1, section: 0), at: .bottom, animated: false)
+        }.disposed(by: disposeBag)
+
         /// Fire a search request when user hits search button
         let searchEventObs = searchBar.rx.searchButtonClicked.asObservable()
         let searchTermObs  = searchBar.rx.text.asObservable()
         _ = searchEventObs.withLatestFrom(searchTermObs).subscribe { [weak self] evt in
-            if let term = evt.element, let page = self?.page {
+            if let term = evt.element {
+                /// Store  Search Term
                 self?.term = term
-                self?.search(term: term!, page: page)
+                /// Clear Image Buffer for a new Search
+                self?.imageBuffer.removeAll()
+                /// Do New Search - page 1
+                self?.search(term: term!, page: 1)
             }
         }.disposed(by: disposeBag)
   
     }
+    
     /// Main Search Function
     func search(term: String, page: Int) {
-        
-        print("Search: \(term) Page: \(page)")
-        
+       
         if let viewModel = self.viewModel {
             
             /// Hide Spinner
@@ -75,21 +102,32 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
             if !(viewModel.searchTermValidation(term: term)) {
                 return
             }
-            /// Binding sets the datasource directly so we only want this done once per search
-            self.collectionView.dataSource = nil
             
             /// Show spinner - not very obvious - could change to enum & convert to bool
             /// binds BS direct to isHidden propertty of the UIView displaying the spinner
             viewModel.searchSpinnerViewBS.onNext(false)
             
-            /// Concise way of binding UICollectionView to its DataSource (as an Observable)
-            /// which is returned by the Search. This may seem a bit obfuscated but it eliminates
-            /// a lot of boiler plate code.
-            _ = viewModel.search(for: term, page: self.page).bind(to: (self.collectionView.rx.items(cellIdentifier: self.reuseIdentifier))) { _, imageSearchResult, cell in
-                if let imageView = imageSearchResult.image {
-                    self.configCell(cell: cell, imageView: imageView)
+            /// Search for Term
+            /// Appends Results to Buffer and publishes update shown by CollectionView
+            _ = viewModel.search(for: term, page: self.page).observeOn(MainScheduler.instance).subscribe({ evt in
+                if let results = evt.element {
+                    /// Append
+                    let count = self.imageBuffer.count
+                    self.imageBuffer += results
+                    /// Recalculate the Last Index so we can move directly to it
+                    if !self.imageBuffer.isEmpty {
+                        self.lastIndex = (self.imageBuffer.count - count ) * (self.page - 1)
+                    }
+                    self.imageBufferPS.onNext(self.imageBuffer)
+                    print("images count: \(self.imageBuffer.count) page: \(self.page) Last Index: \(self.lastIndex) term: \(term)")
+                    
                 }
-            }
+            }).disposed(by: disposeBag)
+            
+            /// Temp Store the Term and Page Number
+            self.term = term
+            self.page = page
+            
             /// Cancel the Keyboard
             self.searchBar.resignFirstResponder()
             
@@ -118,7 +156,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
 }
 /// Extension on Search View Controller - provides some call backs for rotation and spacing + setting the title
 extension SearchViewController {
-    
+ 
     /// Calculate Cell spacing
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -133,12 +171,15 @@ extension SearchViewController {
     func setControllerTitle(title: String) {
         self.navigationController?.navigationBar.topItem?.title = title
     }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("did end scrolling")
-        self.page += 1
-        self.search(term: self.term ?? "", page: self.page)
-        //viewModel?.searchSpinnerViewBS.onNext(false)
+   
+    /// Call back used to detect end of Scroll and fire off a new Search with new Page number
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == self.imageBuffer.count - 1 {
+            /// Update Page - we then load the next page with same term
+            self.page += 1
+            self.search(term: self.term!, page: self.page)
+            viewModel?.searchSpinnerViewBS.onNext(false)
+         }
     }
     
     /// Manage the Rotation
