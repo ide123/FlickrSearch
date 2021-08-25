@@ -6,22 +6,62 @@
 //
 
 import XCTest
+import RxSwift
 @testable import FlickrSearch
 
 class FlickrSearchTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testValidTermFlickrDataSource() throws {
+        let dataSource = FlickrDataSource()
+        let expectation = XCTestExpectation(description: "get kitten data")
+        dataSource.search(for: "Kittens", page: 1) { data in
+            XCTAssertTrue(!data.isEmpty, "data found when there should not be any")
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 10, enforceOrder: true)
+    }
+    
+    func testInvalidTermFlickrDataSource() throws {
+        let dataSource = FlickrDataSource()
+        let expectation = XCTestExpectation(description: "empty term should not return data")
+        dataSource.search(for: "", page: 1) { data in
+            print("Data: \(data)")
+            XCTAssertTrue(data.isEmpty, "data found when there should not be any")
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 20, enforceOrder: true)
+    }
+    
+    func testInvalidTermModel() throws {
+        let dataSource = FlickrDataSource()
+        let searchModel = SearchModel(dataSource: dataSource)
+        let expectation = XCTestExpectation(description: "empty term should not return data")
+        _ = searchModel.search(for: "", page: 1).subscribe { results in
+            if let data = results.element {
+                XCTAssertTrue(data.isEmpty, "data found when there should not be any")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 20, enforceOrder: true)
+    }
+    
+    func testValidTermModel() throws {
+        let dataSource = FlickrDataSource()
+        let searchModel = SearchModel(dataSource: dataSource)
+        let expectation = XCTestExpectation(description: "empty term should not return data")
+        _ = searchModel.search(for: "Kittens", page: 1).subscribe { results in
+            if let data = results.element {
+                XCTAssertTrue(!data.isEmpty, "data found when there should not be any")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 20, enforceOrder: true)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testFlickrDataSource() throws {
-       let dataSource = FlickrDataSource()
-       dataSource.search(for: "kittens")
-    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
