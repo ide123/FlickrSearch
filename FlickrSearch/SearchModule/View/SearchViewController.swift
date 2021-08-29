@@ -5,7 +5,7 @@
 //
 //  A lightweight View Controller that manages its views and thats all.
 //
-//  Demonstrates Display of Flickr Search Results in 3 column format
+//  Demonstrates Display of Flickr Image Search Results in 3 column format
 //  with continuous scrolling and correct support for device rotation.
 //
 //
@@ -122,7 +122,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
                     }
                     /// Notify the Results for the Collection View Binding
                     self.imageBufferPS.onNext(self.imageBuffer)
-                    print("images count: \(self.imageBuffer.count) page: \(self.page) Last Index: \(self.lastIndex) term: \(term)")
                     
                 }
             }).disposed(by: disposeBag)
