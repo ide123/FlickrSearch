@@ -2,7 +2,7 @@
 //  ModelProtocol.swift
 //  FlickrSearch
 //
-//  Created by jonathan ide on 24/8/21.
+//  Created by jonathan ide on 24/6/21.
 //
 
 import Foundation

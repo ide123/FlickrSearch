@@ -4,7 +4,7 @@
 //
 //  Self-Contained Flickr Specific Data Source for Images
 //
-//  Created by jonathan ide on 21/8/21.
+//  Created by jonathan ide on 21/6/21.
 //
 
 import Foundation
@@ -52,13 +52,12 @@ private let DOMAINWITHKEY = DOMAIN + ACCESSKEY
 private let PARAMETERS    = "&format=json&nojsoncallback=1&page="
 
 public class FlickrDataSource {
-
+    
     /// Search for Images - uses DispatchGroup to synchronise the completion of the numerous API calls
     /// Uses escaping closure to return array of seach results. Defaults to page 1 if not set.
     func search(for term: String?, page: Int=1, completion:@escaping ([ImageSearchResult]) -> Void) {
         
         var imageSearchResults    =  [ImageSearchResult]()
-        var imageURLResults       =  [ImageURLResult]()
         let group                 =  DispatchGroup()
         
         /// Check Term
@@ -73,14 +72,13 @@ public class FlickrDataSource {
         
         /// Get the JSON meta data from the Search Term
         if let url = self.fullJsonURL(term, page) {
-            group.enter()
             AF.request(url).responseJSON(completionHandler: { response in
                 switch response.result {
                 case .success(let value):
-                    /// Use Swifty JSON
+                    /// Use Swifty JSON to process response
                     let json = JSON(value)
                     /// Page N - all photos
-                    imageURLResults = (json["photos"]["photo"].array?.compactMap({ photo ->  ImageURLResult? in
+                    imageSearchResults = (json["photos"]["photo"].array?.compactMap({ photo ->  ImageSearchResult? in
                         /// Get Image Title - can be Nil
                         let title  = photo["title"].string
                         /// Extract URL variable Values from Json
@@ -90,17 +88,14 @@ public class FlickrDataSource {
                               let server  = photo["server"].string else {
                             return nil
                         }
-                        /// Create a URL result
+                        /// Create a temporary URL result
                         let imageURLResult = ImageURLResult(id: photoID, farm: farm, secret: secret, server: server, title: title)
-                        return imageURLResult
-                    }))!
-                    
-                    group.leave()
-                    
-                    /// Now get the Actual Images
-                    _ =  imageURLResults.compactMap { imageURLResult -> ImageSearchResult? in
-                        group.enter()
+                        
+                        ///  We get Image for each result - we can only return when  all the images are back
+                        ///  so we wait for all to return before completing
                         var imageSearchResult: ImageSearchResult?
+                        /// Start Sync
+                        group.enter()
                         AF.request(imageURLResult.url, method: .get).response { response in
                             switch response.result {
                             case .success(let responseData):
@@ -113,17 +108,17 @@ public class FlickrDataSource {
                             case .failure(let error):
                                 print("error", error)
                             }
-                            
+                            ///
                             group.leave()
                         }
                         return imageSearchResult
-                    }
+                    }))!
                     /// Sync. completion of all tasks - call completion with the Image data
+                    /// This is called when number of" enters" = number of "leaves"
                     group.notify(queue: DispatchQueue.global()) {
                         print("Complete \(imageSearchResults.count)")
                         completion(imageSearchResults)
                     }
-                    
                 case .failure(let error):
                     print(error)
                 }

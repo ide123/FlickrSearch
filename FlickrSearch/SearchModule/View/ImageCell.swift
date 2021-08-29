@@ -3,7 +3,7 @@
 //  FlickrSearch
 //  A subclass of UICollectionViewCell - we only show images
 //  but could show a title too although these are often very long.
-//  Created by jonathan ide on 22/8/21.
+//  Created by jonathan ide on 22/6/21.
 //
 
 import Foundation
