@@ -2,6 +2,8 @@
 //  FlickrSearchTests.swift
 //  FlickrSearchTests
 //
+//  Unit and Integration Tests
+// 
 //  Created by jonathan ide on 21/6/21.
 //
 
@@ -15,7 +17,7 @@ class FlickrSearchTests: XCTestCase {
         let dataSource = FlickrDataSource()
         let expectation = XCTestExpectation(description: "get kitten data")
         dataSource.search(for: "Kittens", page: 1) { data in
-            XCTAssertTrue(!data.isEmpty, "data found when there should not be any")
+            XCTAssertTrue(!data.isEmpty, "no data found when there should be some")
             expectation.fulfill()
         }
         
@@ -51,10 +53,40 @@ class FlickrSearchTests: XCTestCase {
     func testValidTermModel() throws {
         let dataSource = FlickrDataSource()
         let searchModel = SearchModel(dataSource: dataSource)
-        let expectation = XCTestExpectation(description: "empty term should not return data")
+        let expectation = XCTestExpectation(description: "term return data")
         _ = searchModel.search(for: "Kittens", page: 1).subscribe { results in
             if let data = results.element {
-                XCTAssertTrue(!data.isEmpty, "data found when there should not be any")
+                XCTAssertTrue(!data.isEmpty, "no data found when there should be some")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 20, enforceOrder: true)
+    }
+    
+    func testValidTermViewModel() throws {
+        let dataSource = FlickrDataSource()
+        let searchModel = SearchModel(dataSource: dataSource)
+        let searchViewModel = SearchViewModel(model: searchModel)
+        let expectation = XCTestExpectation(description: "term return data")
+        _ = searchViewModel.search(for: "Kittens", page: 1).subscribe { results in
+            if let data = results.element {
+                XCTAssertTrue(!data.isEmpty, "no data found when there should be some")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 20, enforceOrder: true)
+    }
+    
+    func testInvalidTermViewModel() throws {
+        let dataSource = FlickrDataSource()
+        let searchModel = SearchModel(dataSource: dataSource)
+        let searchViewModel = SearchViewModel(model: searchModel)
+        let expectation = XCTestExpectation(description: "no data returned")
+        _ = searchViewModel.search(for: "", page: 1).subscribe { results in
+            if let data = results.element {
+                XCTAssertTrue(data.isEmpty, "data found when there should be none")
             }
             expectation.fulfill()
         }
