@@ -20,6 +20,10 @@ class SearchModel {
         self.dataSource = dataSource
     }
     /// Return Observable of an Array of  Image SearchResults Structs which contain the Image and a Title
+    ///
+    /// - Parameters:term : Seach Term , page: Page number
+    /// - Throws:
+    /// - Returns:Observable event containing Array of Image Search Results
     func search(for term: String?, page: Int=1) -> Observable<[ImageSearchResult]> {
 
         return Observable<[ImageSearchResult]>.create { [weak self] observer in

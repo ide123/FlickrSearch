@@ -2,7 +2,7 @@
 //  FlickrSearchTests.swift
 //  FlickrSearchTests
 //
-//  Unit and Integration Tests
+//  Unit and Async Integration Tests
 // 
 //  Created by jonathan ide on 21/6/21.
 //

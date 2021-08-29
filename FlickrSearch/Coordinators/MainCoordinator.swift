@@ -22,6 +22,10 @@ class MainCoordinator: NSObject, CoordinatorProtocol, UINavigationControllerDele
     }
 
     /// Need to push the VC on to the Nav. Controller - this is the bootstrap VC
+    ///
+    /// - Parameters:
+    /// - Throws:
+    /// - Returns:
     func start() {
         /// Make this the Nav Delegate
         self.navigationController.delegate = self

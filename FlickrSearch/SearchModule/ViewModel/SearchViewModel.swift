@@ -23,6 +23,10 @@ class SearchViewModel: NSObject {
         }.bind(to: searchSpinnerViewBS.asObserver()).disposed(by: disposeBag)
     }
     /// Main Search - input term - output optional SearchResults
+    ///
+    /// - Parameters: term : Seach Term , page: Page number
+    /// - Throws:
+    /// - Returns: Observable event containing Array of Image Search Results
     func search(for term: String, page: Int) -> Observable<[ImageSearchResult]> {
         return model.search(for: term, page: page)
     }

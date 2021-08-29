@@ -93,6 +93,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     /// Main Search Function
+    ///
+    /// - Parameters:term : Seach Term , page: Page number
+    /// - Throws:
+    /// - Returns:
     func search(term: String, page: Int) {
        
         if let viewModel = self.viewModel {
@@ -171,6 +175,7 @@ extension SearchViewController {
     }
     
     /// Manage the Rotation
+    ///:
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         guard let view = self.collectionView else {
@@ -180,6 +185,10 @@ extension SearchViewController {
     }
     
     /// Configure a cell and image view
+    ///
+    /// - Parameters:
+    /// - Throws:
+    /// - Returns:
     func configCell(cell: UICollectionViewCell, imageView: UIImageView) {
         
         /// Add the image as a subview of the Cell Content View
